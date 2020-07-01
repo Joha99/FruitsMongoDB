@@ -6,10 +6,22 @@ mongoose.connect("mongodb://localhost:27017/fruitsDB", {
 });
 
 // scaffold out how we want data in a particular collection to be structured
+// add validation to data type
 const fruitSchema = new mongoose.Schema({
-  name: String,
-  color: String,
-  rating: Number,
+  name: {
+    type: String,
+    required: [true, "No name specified"],
+  },
+  color: {
+    type: String,
+    required: [true, "No color specified"],
+  },
+  rating: {
+    type: Number,
+    required: [true, "No rating specified"],
+    min: 0,
+    max: 10,
+  },
 });
 
 // use schema to create a model
@@ -30,17 +42,12 @@ Fruit.find(function (err, fruits) {
   if (err) {
     console.log(err);
   } else {
+    mongoose.connection.close();
     fruits.forEach((fruit) => {
       console.log(fruit.name);
     });
   }
 });
-
-
-
-
-
-
 
 // const personSchema = new mongoose.Schema({
 //   name: String,
