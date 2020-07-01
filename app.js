@@ -72,14 +72,21 @@ Fruit.find(function (err, fruits) {
     fruits.forEach((fruit) => {
       console.log(fruit);
     });
-    mongoose.connection.close(); 
   }
 });
 
-// const personSchema = new mongoose.Schema({
-//   name: String,
-//   age: Number,
-// });
-// const Person = mongoose.model("Person", personSchema);
-// const person = new Person({ name: "Bob", age: 30 });
-// person.save();
+const personSchema = new mongoose.Schema({
+  name: String,
+  age: Number,
+  favoriteFruit: fruitSchema,
+});
+
+const Person = mongoose.model("Person", personSchema);
+
+const pineapple = new Fruit({ name: "Pineapple", color: "Yellow", rating: 6 });
+
+pineapple.save(); 
+
+const person = new Person({ name: "John", age: 15, favoriteFruit: pineapple });
+
+person.save();
